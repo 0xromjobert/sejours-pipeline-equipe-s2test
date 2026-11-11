@@ -2,6 +2,7 @@
 
 import logging
 import os
+from collections import Counter
 
 from pydantic import ValidationError
 
@@ -24,7 +25,10 @@ def run(source, loader) -> tuple[list[Sejour], list[dict]]:
                 {**ligne, "motif": ".".join(str(m) for m in motif) or "sejour"}
             )
     loader.write(sejours)
-    log.info("%d séjours chargés, %d rejetés", len(sejours), len(rejets))
+    motifs = Counter(r["motif"] for r in rejets)
+    log.info(
+        "%d séjours chargés, %d rejetés %s", len(sejours), len(rejets), dict(motifs)
+    )
     return sejours, rejets
 
 

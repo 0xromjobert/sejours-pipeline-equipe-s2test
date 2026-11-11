@@ -53,3 +53,16 @@ def test_service_en_minuscules():
         }
     )
     assert s.service == "cardio"
+
+
+def test_age_superieur_a_120_refuse():
+    with pytest.raises(ValidationError):
+        Sejour.model_validate(
+            {
+                "id": "S1",
+                "service": "cardio",
+                "entree": "2026-03-01",
+                "sortie": "2026-03-04",
+                "age": "131",
+            }
+        )

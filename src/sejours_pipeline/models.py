@@ -23,9 +23,9 @@ class Sejour(BaseModel):
 
     @field_validator("service")
     @classmethod
-    def service_en_minuscules(cls, service: str) -> str:
-        """Range « Cardio » et « cardio » sous le même nom."""
-        return service.lower()
+    def service_normalise(cls, service: str) -> str:
+        """Retire les espaces et met en minuscules."""
+        return service.strip().lower()
 
 
 def duree_jours(entree: date, sortie: date) -> int:

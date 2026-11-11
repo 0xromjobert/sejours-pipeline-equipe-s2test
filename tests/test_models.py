@@ -66,3 +66,16 @@ def test_age_superieur_a_120_refuse():
                 "age": "131",
             }
         )
+
+
+def test_service_sans_espaces():
+    s = Sejour.model_validate(
+        {
+            "id": "S1",
+            "service": " cardio ",
+            "entree": "2026-03-01",
+            "sortie": "2026-03-04",
+            "age": "71",
+        }
+    )
+    assert s.service == "cardio"

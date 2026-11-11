@@ -11,7 +11,7 @@ class DuckDBLoader:
     def __init__(self, chemin: str) -> None:
         self.chemin = chemin
 
-    def write(self, sejours: list[Sejour]) -> None:
+    def charger(self, sejours: list[Sejour]) -> None:
         """Remplace la table sejours par les séjours donnés."""
         with duckdb.connect(self.chemin) as con:
             con.execute(

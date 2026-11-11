@@ -44,3 +44,9 @@ def test_run_charge_les_valides_et_rejette_les_autres():
     assert [s.id for s in loader.sejours] == ["S1"]
     assert len(sejours) == 1
     assert rejets[0]["motif"] == "service"
+
+
+def test_run_journalise_les_motifs(caplog):
+    with caplog.at_level("INFO"):
+        run(FakeSource(LIGNES), MemoryLoader())
+    assert "{'service': 1}" in caplog.text

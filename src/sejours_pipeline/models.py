@@ -12,7 +12,7 @@ class Sejour(BaseModel):
     service: str = Field(min_length=1)
     entree: date
     sortie: date
-    age: int = Field(ge=0)
+    age: int = Field(ge=0, le=120)
 
     @model_validator(mode="after")
     def sortie_apres_entree(self) -> "Sejour":

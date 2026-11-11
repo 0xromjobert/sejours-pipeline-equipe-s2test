@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class Sejour(BaseModel):
@@ -20,6 +20,12 @@ class Sejour(BaseModel):
         if self.sortie < self.entree:
             raise ValueError(f"sortie {self.sortie} avant entrée {self.entree}")
         return self
+
+    @field_validator("service")
+    @classmethod
+    def service_sans_espaces(cls, service: str) -> str:
+        """Retire les espaces autour du nom du service."""
+        return service.strip()
 
 
 def duree_jours(entree: date, sortie: date) -> int:

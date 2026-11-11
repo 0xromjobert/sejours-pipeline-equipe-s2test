@@ -17,3 +17,9 @@ def test_csv_source_lit_les_lignes(tmp_path):
             "age": "71",
         }
     ]
+
+
+def test_csv_source_fichier_vide(tmp_path):
+    fichier = tmp_path / "vide.csv"
+    fichier.write_text("id,service,entree,sortie,age\n", encoding="utf-8")
+    assert CsvSource(str(fichier)).extract() == []

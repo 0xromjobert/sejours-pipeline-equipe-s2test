@@ -24,10 +24,13 @@ def run(source, loader) -> tuple[list[Sejour], list[dict]]:
             rejets.append(
                 {**ligne, "motif": ".".join(str(m) for m in motif) or "sejour"}
             )
-    loader.write(sejours)
+    loader.charger(sejours)
     motifs = Counter(r["motif"] for r in rejets)
     log.info(
-        "%d séjours chargés, %d rejetés %s", len(sejours), len(rejets), dict(motifs)
+        "%d séjours chargés, %d rejetés %s",
+        len(sejours),
+        len(rejets),
+        dict(motifs),
     )
     return sejours, rejets
 

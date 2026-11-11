@@ -34,7 +34,7 @@ class MemoryLoader:
     def __init__(self) -> None:
         self.sejours = []
 
-    def write(self, sejours) -> None:
+    def charger(self, sejours) -> None:
         self.sejours = list(sejours)
 
 

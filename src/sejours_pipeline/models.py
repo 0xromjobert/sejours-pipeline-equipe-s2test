@@ -2,7 +2,7 @@
 
 from datetime import date
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 
 
 class Sejour(BaseModel):
@@ -12,7 +12,7 @@ class Sejour(BaseModel):
     service: str = Field(min_length=1)
     entree: date
     sortie: date
-    age: int = Field(ge=0)
+    age: int = Field(ge=0, le=120)
 
     @model_validator(mode="after")
     def sortie_apres_entree(self) -> "Sejour":
@@ -20,6 +20,12 @@ class Sejour(BaseModel):
         if self.sortie < self.entree:
             raise ValueError(f"sortie {self.sortie} avant entrée {self.entree}")
         return self
+
+    @field_validator("service")
+    @classmethod
+    def service_normalise(cls, service: str) -> str:
+        """Retire les espaces et met en minuscules."""
+        return service.strip().lower()
 
 
 def duree_jours(entree: date, sortie: date) -> int:
